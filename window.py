@@ -1,5 +1,5 @@
 from PyQt5.QtWidgets import *
-from PyQt5 import QtGui
+from PyQt5 import QtGui,QtCore
 import sys
 import nju_login_2
 class ChangeInfo(QDialog):
