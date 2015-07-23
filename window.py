@@ -40,30 +40,21 @@ class ChangeInfo(QDialog):
     def ok(self):
         nju.set_id_pw(self.usrLineEdit.text(),self.pwdLineEdit.text())
         super(ChangeInfo, self).accept()
-    def accept(self):
-        if self.usrLineEdit.text().strip() == "eric" and self.pwdLineEdit.text() == "eric":
-            super(ChangeInfo, self).accept()
-        else:
-            print(self.pwdLineEdit.text())
-            QMessageBox.warning(self,
-                    "警告",
-                    "用户名或密码错误！",
-                    QMessageBox.Yes)
-            self.usrLineEdit.setFocus()
 class LoginDlg(QDialog):
     def __init__(self, parent=None):
         super(LoginDlg, self).__init__(parent)
         self.browser = QPlainTextEdit()
-        layout = QVBoxLayout()
-        layout.addWidget(self.browser)
-
         gridLayout = QGridLayout()
+        gridLayout.addWidget(self.browser,0,0,1,2)
         self.conBtn = QPushButton("连接")
         changeinfoBtn = QPushButton("修改账号密码")
-        gridLayout.addWidget(self.conBtn, 0, 0, 1, 1)
-        gridLayout.addWidget(changeinfoBtn, 0, 1, 1, 1)
-        layout.addLayout(gridLayout)
-        self.setLayout(layout)
+        gridLayout.addWidget(self.conBtn, 1, 0, 1, 1)
+        gridLayout.addWidget(changeinfoBtn, 1, 1, 1, 1)
+        cancelBtn=QPushButton("关闭程序")
+        gridLayout.addWidget(cancelBtn, 2, 0,1,2)
+        self.setLayout(gridLayout)
+        cancelBtn.setFocus()
+        cancelBtn.clicked.connect(self.accept)
         changeinfoBtn.clicked.connect(self.show_info)
         self.conBtn.clicked.connect(self.connect)
         self.browser.setReadOnly(True)
@@ -81,10 +72,9 @@ class LoginDlg(QDialog):
             self.conBtn.setText('连接')
         else:
             self.conBtn.setText('断开')
-
-nju=nju_login_2.NJU_Login()
-app = QApplication(sys.argv)
-dlg = LoginDlg()
-dlg.show()
-dlg.exec_()
-app.exit()
+if __name__=='__main__':
+    nju=nju_login_2.NJU_Login()
+    app = QApplication(sys.argv)
+    dlg = LoginDlg()
+    dlg.show()
+    sys.exit(app.exec_())
