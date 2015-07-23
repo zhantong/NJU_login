@@ -4,6 +4,7 @@ import urllib.parse
 import json
 import time
 import os
+import base64
 form_title = '南京大学网络接入系统'
 login_url = 'http://p.nju.edu.cn/portal_io/login'  # 登录post的URL
 logout_url = 'http://p.nju.edu.cn/portal_io/logout'  # 登出post的URL
@@ -13,8 +14,8 @@ class NJU_Login():
     def __init__(self):
         if os.path.exists(info_name):
             with open(info_name,'r') as f:
-                self.id=f.readline().strip()
-                self.pw=f.readline().strip()
+                self.id=self.decrypt(f.readline().strip())
+                self.pw=self.decrypt(f.readline().strip())
         else:
             with open(info_name,'w') as f:
                 pass
@@ -24,7 +25,7 @@ class NJU_Login():
         self.id=id
         self.pw=pw
         with open(info_name,'w') as f:
-            f.write('%s\n%s'%(id,pw))
+            f.write('%s\n%s'%(self.encrypt(id),self.encrypt(pw)))
     def login(self):  # 登录
         data = urllib.parse.urlencode({  # 转换post的form并编码
             'username': self.id,
@@ -33,7 +34,10 @@ class NJU_Login():
         post = urllib.request.urlopen(url=login_url, data=data)
         return json.loads(post.read().decode('utf-8'))  # 获得登录信息
 
-
+    def encrypt(self,s):
+        return base64.b32encode(base64.b64encode(s.encode('utf-8'))).decode('utf-8')
+    def decrypt(self,s):
+        return base64.b64decode(base64.b32decode(s)).decode('utf-8')
     def logout(self):  # 登出
         post = urllib.request.Request(url=logout_url, method='POST')
         con = urllib.request.urlopen(post)
