@@ -1,4 +1,5 @@
 from PyQt5.QtWidgets import *
+from PyQt5 import QtGui
 import sys
 import nju_login_2
 class ChangeInfo(QDialog):
@@ -27,6 +28,7 @@ class ChangeInfo(QDialog):
         aboutBtn.clicked.connect(self.about)
         cancelBtn.clicked.connect(self.reject)
         self.setWindowTitle("修改账号密码")
+        self.setWindowIcon(QtGui.QIcon('favicon.ico'))
         #self.resize(300, 200)
         self.usrLineEdit.setText(nju.id)
         self.pwdLineEdit.setText(nju.pw)
@@ -50,6 +52,7 @@ class LoginDlg(QWidget):
         gridLayout.addWidget(cancelBtn, 2, 0,1,2)
         self.setLayout(gridLayout)
         self.setWindowTitle("南京大学|校园网自动登录")
+        self.setWindowIcon(QtGui.QIcon('favicon.ico'))
         cancelBtn.setFocus()
         cancelBtn.clicked.connect(self.close)
         changeinfoBtn.clicked.connect(self.show_info)
