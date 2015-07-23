@@ -40,7 +40,7 @@ class ChangeInfo(QDialog):
     def ok(self):
         nju.set_id_pw(self.usrLineEdit.text(),self.pwdLineEdit.text())
         super(ChangeInfo, self).accept()
-class LoginDlg(QDialog):
+class LoginDlg(QWidget):
     def __init__(self, parent=None):
         super(LoginDlg, self).__init__(parent)
         self.browser = QPlainTextEdit()
@@ -54,7 +54,7 @@ class LoginDlg(QDialog):
         gridLayout.addWidget(cancelBtn, 2, 0,1,2)
         self.setLayout(gridLayout)
         cancelBtn.setFocus()
-        cancelBtn.clicked.connect(self.accept)
+        cancelBtn.clicked.connect(self.close)
         changeinfoBtn.clicked.connect(self.show_info)
         self.conBtn.clicked.connect(self.connect)
         self.browser.setReadOnly(True)
