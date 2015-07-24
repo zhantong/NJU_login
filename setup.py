@@ -9,16 +9,14 @@ file_dir = 'window.py'
 sys.argv.append('py2exe')  # 巧妙避免了用到cmd
 options = {
     'py2exe': {
-    'compressed': 1,
-        'bundle_files': 1,  # 将所有东西打包到一个.exe文件
-        'includes':['sip']
+        'compressed': 1,  # 压缩
+        'bundle_files': 1,  # 是否打包到一个.exe文件
+        'includes': ['sip']  # PyQt打包成exe的错误修复
     }
 }
 setup(options=options,
-      zipfile=None,  # 将.zip文件也打包进.exe文件
-      windows=[{
-      'script':file_dir,
-      'icon_resources': [(1, "favicon.ico")]
-      }],
-      version = "2015.07.23",
-      name = "NJU_login")  # windows参数可以隐藏运行时的cmd框
+      zipfile=None,  # 是否将.zip文件也打包进.exe文件
+      windows=[{  # windows参数可以隐藏运行时的cmd框
+          'script': file_dir,
+          'icon_resources': [(1, "favicon.ico")]  # 加入图标
+      }])
