@@ -5,10 +5,10 @@ import json
 import time
 import os
 import base64
-form_title = '南京大学网络接入系统'
+#form_title = '南京大学网络接入系统'
 login_url = 'http://p.nju.edu.cn/portal_io/login'  # 登录post的URL
 logout_url = 'http://p.nju.edu.cn/portal_io/logout'  # 登出post的URL
-info_url = 'http://p.nju.edu.cn/portal_io/proxy/userinfo'
+info_url = 'http://p.nju.edu.cn/portal_io/getinfo' 
 info_name='info.ini'
 class NJU_Login():
     def __init__(self):
@@ -49,17 +49,19 @@ class NJU_Login():
         post = urllib.request.Request(url=info_url, method='POST')
         con = urllib.request.urlopen(post)
         info = json.loads(con.read().decode('utf-8'))  # 获得用户信息
-        if info['reply_code']==3010101:
+        if info['reply_code']==0:
             text = ('姓名：%s\n'
                     '学号：%s\n'
                     '接入区域：%s\n'
                     '服务类别：%s\n'
-                    '网费余额：%s元\n')
-            text_real = (info['results']['fullname'],  # 与text配合
-                         info['results']['username'],
-                         info['results']['area_name'],
-                         info['results']['service_name'],
-                         info['results']['payamount'])
+                    #'累计上网时长：%s\n'
+                    '网费余额：%.2f元\n')
+            text_real = (info['userinfo']['fullname'],  # 与text配合
+                         info['userinfo']['username'],
+                         info['userinfo']['area_name'],
+                         info['userinfo']['service_name'],
+                         #info['userinfo']['acctstarttime'],
+                         info['userinfo']['balance']/100)
             return text % text_real
         else:
             return -1
