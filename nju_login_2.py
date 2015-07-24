@@ -1,11 +1,9 @@
-
 import urllib.request
 import urllib.parse
 import json
 import time
 import os
 import base64
-#form_title = '南京大学网络接入系统'
 login_url = 'http://p.nju.edu.cn/portal_io/login'  # 登录post的URL
 logout_url = 'http://p.nju.edu.cn/portal_io/logout'  # 登出post的URL
 info_url = 'http://p.nju.edu.cn/portal_io/getinfo'  # 获取用户信息URL
