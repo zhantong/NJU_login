@@ -5,7 +5,7 @@ from PyQt5.QtWidgets import *
 from PyQt5 import QtGui
 import PyQt5.QtCore  # 只用在py2exe用来打包，这里并未用到
 import sys
-import nju_login_2
+import Campusnetwork
 
 
 class ChangeInfo(QDialog):
@@ -104,7 +104,7 @@ class LoginDlg(QWidget):
             self.conBtn.setText('断开')
 
 if __name__ == '__main__':
-    nju = nju_login_2.Campusnetwork()
+    nju = Campusnetwork.Campusnetwork()
     app = QApplication(sys.argv)
     dlg = LoginDlg()
     dlg.show()
