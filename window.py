@@ -1,10 +1,17 @@
+"""PyQt实现南京大学校园网登录、登出图形界面
+    需要下载并安装PyQt5（并不能通过pip安装）
+"""
 from PyQt5.QtWidgets import *
-from PyQt5 import QtGui, QtCore
+from PyQt5 import QtGui
+import PyQt5.QtCore  # 只用在py2exe用来打包，这里并未用到
 import sys
 import nju_login_2
 
 
-class ChangeInfo(QDialog):  # 修改账号密码界面
+class ChangeInfo(QDialog):
+
+    """修改账号密码界面
+    """
 
     def __init__(self, parent=None):
         super(ChangeInfo, self).__init__(parent)
@@ -33,19 +40,26 @@ class ChangeInfo(QDialog):  # 修改账号密码界面
         self.setWindowTitle("修改账号密码")
         self.setWindowIcon(QtGui.QIcon('favicon.ico'))
         #self.resize(300, 200)
-        self.usrLineEdit.setText(nju.id)
-        self.pwdLineEdit.setText(nju.pw)
+        self.usrLineEdit.setText(nju.id)  # 读取账号
+        self.pwdLineEdit.setText(nju.pw)  # 读取密码
 
-    def ok(self):  # 提交修改账号密码
+    def ok(self):
+        """提交修改账号密码
+        """
         nju.set_id_pw(self.usrLineEdit.text(), self.pwdLineEdit.text())
         super(ChangeInfo, self).accept()
 
-    def about(self):  # 关于作者
+    def about(self):
+        """关于作者
+        """
         QMessageBox.about(
             self, "关于作者", "如果你有任何意见或建议\n欢迎联系我：zhantong1994@163.com")
 
 
-class LoginDlg(QWidget):  # 主界面
+class LoginDlg(QWidget):
+
+    """主界面
+    """
 
     def __init__(self, parent=None):
         super(LoginDlg, self).__init__(parent)
@@ -67,14 +81,19 @@ class LoginDlg(QWidget):  # 主界面
         changeinfoBtn.clicked.connect(self.show_info)
         self.conBtn.clicked.connect(self.connect)
         self.browser.setReadOnly(True)
-        self.conBtn.clicked.emit(True)
+        self.conBtn.clicked.emit(True)  # 模拟点击
 
-    def show_info(self):  # 打开修改账号密码界面
+    def show_info(self):
+        """打开修改账号密码界面
+        """
         cinfo = ChangeInfo()
         cinfo.show()
         cinfo.exec_()
 
-    def connect(self):  # 连接/断开
+    def connect(self):
+        """连接/断开
+            连接或断开校园网，并设置按钮的text
+        """
         if self.conBtn.text() == '连接':
             self.browser.setPlainText(nju.connect())
         else:
@@ -85,7 +104,7 @@ class LoginDlg(QWidget):  # 主界面
             self.conBtn.setText('断开')
 
 if __name__ == '__main__':
-    nju = nju_login_2.NJU_Login()
+    nju = nju_login_2.Campusnetwork()
     app = QApplication(sys.argv)
     dlg = LoginDlg()
     dlg.show()

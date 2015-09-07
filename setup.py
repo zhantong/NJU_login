@@ -1,9 +1,11 @@
-"""
-使用py2exe将.py文件转换为.exe文件。
-需要首先安装py2exe,可以直接pip install py2exe
+"""将.py文件转换为.exe文件
+  需要首先安装py2exe,可以直接pip install py2exe；
+  实际生成为一个文件夹，里面有必要的dll；
+  另外还需要复制PyQt5中的platforms文件夹，一般路径为
+  Python34/Lib/site-packages/PyQt5/plugins/Platforms。
 """
 from distutils.core import setup
-import py2exe
+import py2exe  # 并未直接调用，但必不可少
 import sys
 file_dir = 'window.py'
 sys.argv.append('py2exe')  # 巧妙避免了用到cmd
