@@ -12,8 +12,10 @@ info_name = 'info.ini'  # 存储账号密码
 
 class NJU_Login():
 
-    def __init__(self):  # 获取保存的账号密码，若文件不存在则创建文件
-        if os.path.exists(info_name):
+    def __init__(self, id='', pw=''):  # 获取保存的账号密码，若文件不存在则创建文件
+        if id != '':
+            self.set_id_pw(id, pw)
+        elif os.path.exists(info_name):
             with open(info_name, 'r') as f:
                 self.id = self.decrypt(f.readline().strip())
                 self.pw = self.decrypt(f.readline().strip())
